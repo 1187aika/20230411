@@ -17,20 +17,23 @@ export const Login = () => {
     
     setText2(e.target.value);
   };
-
+  
   // ログインボタンクリック時の処理
   const handleAdd = async () => {
   
     const LoginResult = { Mail: mail, PassWord : pw };
 
     try {
-      const { data } = await axios.get("api/login/1");
+      const { data } = await axios.get("api/login");
 
        console.log(data);
-       if(LoginResult.Mail == data.mail && LoginResult.PassWord == data.passWord){
-        require("../index2.tsx");
-       }
-       
+       for(let i=0; i<data.length; i++){
+        if(LoginResult.Mail === data[i].mail && LoginResult.PassWord === data[i].passWord){
+         require("./Home.js");
+        
+         
+        }
+      }
 
     } catch (e) {
 
