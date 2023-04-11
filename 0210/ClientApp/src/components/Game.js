@@ -7,7 +7,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
 firebase.initializeApp({
-  apiKey: "AIzaSyC83nIV3cq9LX2Xu2R8Dlj_Cw2SScLs18E",
+  apiKey: "自分のAPIKEY",
   authDomain: "test0405-fcec1.firebaseapp.com",
   projectId: "test0405-fcec1",
   storageBucket: "test0405-fcec1.appspot.com",
@@ -18,6 +18,8 @@ firebase.initializeApp({
 
 const roomNumber = sessionStorage.getItem('input_number');
 const db = firebase.firestore();
+const collectDB = db.collection('game0314');
+const docDB = db.collection('game0314').doc(roomNumber);
 
 
 function Square(props) {
@@ -94,11 +96,11 @@ class Game extends React.Component {
       xIsNext: true
     };
 
-const testDB2 = db.collection('game0314');
+
 var flag = true;
 
 
-testDB2.onSnapshot((snapshot) => {
+collectDB.onSnapshot((snapshot) => {
   snapshot.forEach((doc) => {
    var docNumber= doc.ref.id;
     if(roomNumber===docNumber){
@@ -107,8 +109,8 @@ testDB2.onSnapshot((snapshot) => {
   })
 if(flag){
    
-  const testDB2 = db.collection('game0314').doc(roomNumber);
-  testDB2.set({
+  
+  docDB.set({
     squares: Array(25).fill(null),
     xIsNext: true
   });
@@ -117,10 +119,9 @@ if(flag){
 );
 
     const history = this.state.history; 
-    const testDB5 = db.collection('game0314').doc(roomNumber)
-    testDB5.onSnapshot((doc) => {
+    docDB.onSnapshot((doc) => {
       console.log(doc.data());
-      console.log(testDB5.id);
+      console.log(docDB.id);
 
     this.setState({
       history: history.concat([{
@@ -146,17 +147,17 @@ if(flag){
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     console.log(squares);
-    const testDB = db.collection('game0314').doc(roomNumber)
+    
 
-   await testDB.update({
+   await docDB.update({
       squares: squares,
       xIsNext: !this.state.xIsNext
     });
 
-  const testDB5 = db.collection('game0314').doc(roomNumber)  
-  testDB5.onSnapshot((doc) => {
+  
+  docDB.onSnapshot((doc) => {
         console.log(doc.data());
-        console.log(testDB5.id);
+        console.log(docDB.id);
 
       this.setState({
         history: history.concat([{

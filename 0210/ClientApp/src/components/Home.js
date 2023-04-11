@@ -5,8 +5,6 @@ import reportWebVitals from './reportWebVitals';
 //import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 
-
-
 //const db = firebase.firestore();
 
 class Home extends React.Component {
